@@ -26,9 +26,20 @@ import java.util.Random;
 
 public class UnusedStatement extends Generator{
     private static Statement getUnusedStatement(){
-        String timestamp = new Timestamp(System.currentTimeMillis()).toString();
-        String unusedStr = "String timestamp = \"" + timestamp + "\";";
-        return StaticJavaParser.parseStatement(unusedStr);
+
+        String unusedStr = "String unusedStr = \"unusedStr\";";
+        String unusedInt = "int unusedInt = 0;";
+        String unusedBoolean = "boolean unusedBoolean = false;";
+        String unusedChar = "char unusedChar = '0';";
+        String unusedFloat = "float unusedFloat = 0f;";
+        List<String> unusedStmts = new ArrayList<>();
+        unusedStmts.add(unusedStr);
+        unusedStmts.add(unusedInt);
+        unusedStmts.add(unusedBoolean);
+        unusedStmts.add(unusedChar);
+        unusedStmts.add(unusedFloat);
+        
+        return StaticJavaParser.parseStatement(unusedStmts.get(new Random().nextInt(unusedStmts.size())));
     }
 
 
@@ -43,8 +54,6 @@ public class UnusedStatement extends Generator{
         for (SimpleName simpleName: simpleNames){
             simpleNameStrings.add(simpleName.getIdentifier());
         }
-        if(simpleNameStrings.contains("timestamp")) return generatedDate;
-
 
         Statement unusedStmt = getUnusedStatement();
 
